@@ -1,2 +1,2 @@
 # Make-steamdeck-easy-again
-Le
+This tool can make your experience on steamdeck easy
