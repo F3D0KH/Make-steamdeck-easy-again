@@ -7,9 +7,11 @@ echo >> "############################################"
 
 echo >> "Choose your option:"
 echo >> "1) Readonly disable"
-#echo >> "2) "
+echo >> "2) Fuck you pacman!(Switch SigLevel)"
 read answer
 if ($answer == 1) {
   sudo steamos-readonly disable
 }
-#if ()
+if ($answer == 2) {
+  sed -i '42s/SigLevel = "Required DatabaseOptional"/SigLevel = Never'
+}
