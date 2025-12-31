@@ -13,5 +13,5 @@ if ($answer == 1) {
   sudo steamos-readonly disable
 }
 if ($answer == 2) {
-  sudo sed -i '42s/SigLevel = "Required DatabaseOptional"/SigLevel = Never'
+  sudo sed -i '42s/SigLevel = "Required DatabaseOptional"/SigLevel = Never' /etc/pacman.conf
 }
