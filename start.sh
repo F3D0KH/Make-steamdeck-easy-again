@@ -1,4 +1,10 @@
 #!/bin/bash
+if [ "$(whoami)" != 'root' ]; then
+    echo "Sorry, this script requires root. Please relaunch like that -> sudo ./start.sh"
+    exit 1
+fi
+# Остальная часть скрипта
+echo "The script is launched from root. Launch!"
 echo >> "##########################################№##"
 echo >> "#                                           #"
 echo >> "# Tool to make your work on steamdeck easier!"
@@ -12,23 +18,23 @@ echo >> "3) Fuck you pacman!(Switch SigLevel)"
 echo >> "4) Install tailscale"
 echo >> "5) Download latest version zapret(linux)"
 read answer
-if ($answer == 1) {
+if [$answer == 1]; then
   sudo steamos-readonly disable
-}
-if ($answer == 2) {
+fi
+if [$answer == 2] then
   sudo pacman -Suy
-}
-if ($answer == 3) {
+fi
+if [$answer == 3] then
   sudo sed -i '42s/.*/SigLevel = Never/' /etc/pacman.conf
-}
-if ($answer == 4) {
+fi
+if [$answer == 4] then
   sudo pacman -Sy tailscale
-}
-if ($answer == 5) {
+fi
+if [$answer == 5] then
   read -p "Please write correct path to existing directory(or if you want to install not in the current directory please type " "):" path
-  if ($path == " ") {
+  if [$path == " "] then
     git clone https://github.com/Sergeydigl3/zapret-discord-youtube-linux.git 
-  } else {
+  else 
     git clone https://github.com/Sergeydigl3/zapret-discord-youtube-linux.git $path
-  }
-}
+  fi
+fi
