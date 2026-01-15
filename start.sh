@@ -15,6 +15,7 @@ echo "Choose your option:"
 echo "1) Readonly disable                          2) Update all pkg"
 echo "3) Fuck you pacman!(Switch SigLevel)         4) Install tailscale"
 echo "5) Download latest version zapret(linux)     6) start WG"
+echo "7) exit"
 read answer
 if [ "$answer" == 1 ]; then
     sudo steamos-readonly disable
@@ -38,4 +39,7 @@ if [ "$answer" == 5 ]; then
 fi
 if [ "$answer" == 6 ]; then
     sudo systemctl start wg-quick@wg0.service
+fi
+if [ "$answer" == 7 ]; then
+    exit 1
 fi
