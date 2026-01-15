@@ -15,7 +15,8 @@ echo "Choose your option:"
 echo "1) Readonly disable                          2) Update all pkg"
 echo "3) Fuck you pacman!(Switch SigLevel)         4) Install tailscale"
 echo "5) Download latest version zapret(linux)     6) start WG"
-echo "7) exit"
+echo "7) Download and make latest version curseforge"
+echo "8) exit"
 read answer
 if [ "$answer" == 1 ]; then
     sudo steamos-readonly disable
@@ -42,4 +43,16 @@ if [ "$answer" == 6 ]; then
 fi
 if [ "$answer" == 7 ]; then
     exit 1
+fi
+if [ "$answer" == 7 ]; then
+    read -p "Please write correct path to existing directory(or if you want to install not in the current directory please type ENTER):" path
+    if [ -z "$path" ]; then
+        git clone https://aur.archlinux.org/curseforge.git
+        cd curseforge
+        sudo -u deck makepkg -sri
+    else
+        git clone https://aur.archlinux.org/curseforge.git $path
+        cd $path
+        sudo -u deck makepkg -sri
+    fi
 fi
