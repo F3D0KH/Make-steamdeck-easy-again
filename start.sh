@@ -16,16 +16,16 @@ echo "1) Readonly disable                          2) Update all pkg"
 echo "3) Fuck you pacman!(Switch SigLevel)         4) Install tailscale"
 echo "5) Download latest version zapret(linux)     6) start WG"
 read answer
-if [$answer == 1]; then
+if ["$answer" == 1]; then
     sudo steamos-readonly disable
 fi
-if [$answer == 2]; then
+if ["$answer" == 2]; then
     sudo pacman -Suy
 fi
-if [$answer == 3]; then
+if ["$answer" == 3]; then
     asudo sed -i '42s/.*/SigLevel = Never/' /etc/pacman.conf
 fi
-if [$answer == 4]; then
+if ["$answer" == 4]; then
     sudo pacman -Sy tailscale
 fi
 if [$answer == 5]; then
