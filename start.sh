@@ -5,11 +5,11 @@ if [ "$(whoami)" != 'root' ]; then
 fi
 # Остальная часть скрипта
 echo "The script is launched from root. Launch!"
-echo >> "##########################################№##"
-echo >> "#                                           #"
-echo >> "# Tool to make your work on steamdeck easier!"
-echo >> "#             by F3D0KH                     #"
-echo >> "##########################################№##"
+echo "##############################################"
+echo "#                                            #"
+echo "# Tool to make your work on steamdeck easier!#"
+echo "#             by F3D0KH                      #"
+echo "##############################################"
 
 echo >> "Choose your option:"
 echo >> "1) Readonly disable                          2) Update all pkg"
