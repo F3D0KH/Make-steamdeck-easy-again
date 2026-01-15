@@ -23,7 +23,7 @@ if [ "$answer" == 2 ]; then
     sudo pacman -Suy
 fi
 if [ "$answer" == 3 ]; then
-    asudo sed -i '42s/.*/SigLevel = Never/' /etc/pacman.conf
+    sudo sed -i '42s/.*/SigLevel = Never/' /etc/pacman.conf
 fi
 if [ "$answer" == 4 ]; then
     sudo pacman -Sy tailscale
