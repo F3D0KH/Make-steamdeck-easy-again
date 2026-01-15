@@ -35,13 +35,13 @@ if [ "$answer" == 5 ]; then
     if [ -z "$path" ]; then
         git clone https://github.com/Sergeydigl3/zapret-discord-youtube-linux.git 
     else
-        git clone https://github.com/Sergeydigl3/zapret-discord-youtube-linux.git $path
+        git clone https://github.com/Sergeydigl3/zapret-discord-youtube-linux.git && mv zapret-discord-youtube-linux "$path"
     fi
 fi
 if [ "$answer" == 6 ]; then
     sudo systemctl start wg-quick@wg0.service
 fi
-if [ "$answer" == 7 ]; then
+if [ "$answer" == 8 ]; then
     exit 1
 fi
 if [ "$answer" == 7 ]; then
