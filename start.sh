@@ -11,10 +11,10 @@ echo "# Tool to make your work on steamdeck easier!#"
 echo "#             by F3D0KH                      #"
 echo "##############################################"
 
-echo >> "Choose your option:"
-echo >> "1) Readonly disable                          2) Update all pkg"
-echo >> "3) Fuck you pacman!(Switch SigLevel)         4) Install tailscale"
-echo >> "5) Download latest version zapret(linux)     6) start WG"
+echo "Choose your option:"
+echo "1) Readonly disable                          2) Update all pkg"
+echo "3) Fuck you pacman!(Switch SigLevel)         4) Install tailscale"
+echo "5) Download latest version zapret(linux)     6) start WG"
 read answer
 if [$answer == 1]; then
     sudo steamos-readonly disable
