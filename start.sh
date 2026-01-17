@@ -5,15 +5,15 @@ if [ "$(whoami)" != 'root' ]; then
 fi
 # Остальная часть скрипта
 echo "The script is launched from root. Launch!"
-echo "##############################################"
-echo "#                                            #"
-echo "# Tool to make your work on steamdeck easier!#"
-echo "#             by F3D0KH                      #"
-echo "##############################################"
+echo "#############################################"
+echo "#Tool to make your work on steamdeck easier!#"
+echo "#                                           #"
+echo "#             by F3D0KH                     #"
+echo "#############################################"
 
 echo "Choose your option:"
 echo "1) Readonly disable                          2) Update all pkg"
-echo "3) Fuck you pacman!(Switch SigLevel)         4) Install tailscale"
+echo "3) Fuck you pacman!(Switch SigLevel)         4) Install tailscale and try to login in"
 echo "5) Download latest version zapret(linux)     6) start WG"
 echo "7) Download and make latest version curseforge"
 echo "8) exit"
@@ -29,6 +29,8 @@ if [ "$answer" == 3 ]; then
 fi
 if [ "$answer" == 4 ]; then
     sudo pacman -Sy tailscale
+    sudo systemctl enable --now tailscaled.service
+    sudo tailscale login
 fi
 if [ "$answer" == 5 ]; then
     read -p "Please write correct path to existing directory(or if you want to install not in the current directory please type ENTER):" path
