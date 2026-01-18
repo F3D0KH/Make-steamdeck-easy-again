@@ -43,14 +43,14 @@ fi
 if [ "$answer" == 6 ]; then
     sudo systemctl start wg-quick@wg0.service
 fi
-if [ "$answer" == 5 ]; then
+if [ "$answer" == 7 ]; then
     read -p "Please write correct path to existing directory(or if you want to install not in the current directory please type ENTER):" path
     if [ -z "$path" ]; then
         git clone https://aur.archlinux.org/curseforge.git
         cd curseforge
         sudo -u deck makepkg -sri
     else
-        git clone https://github.com/Sergeydigl3/zapret-discord-youtube-linux.git && mv zapret-discord-youtube-linux && mv "$path"
+        git clone https://aur.archlinux.org/curseforge.git && mv curseforge "$path"
     fi
 fi
 if [ "$answer" == 8 ]; then
