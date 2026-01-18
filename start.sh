@@ -14,7 +14,7 @@ echo "#############################################"
 echo "Choose your option:"
 echo "1) Readonly disable                          2) Update all pkg"
 echo "3) Fuck you pacman!(Switch SigLevel)         4) Install tailscale and try to login in"
-echo "5) Download latest version zapret(linux)     6) start WG"
+echo "5) Download latest version zapret(linux)     6) start WG (if it already exist)"
 echo "7) Download and make latest version curseforge"
 echo "8) exit"
 read answer
