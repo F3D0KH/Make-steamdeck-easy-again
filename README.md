@@ -9,3 +9,5 @@ In my fan project i use:
 zapret-discord-youtube-linux by Sergeydigl3
 
 curseforge.git by saghm (i borrowed it from AUR)
+
+Copyright hehe funny word
