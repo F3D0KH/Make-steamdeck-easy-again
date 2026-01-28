@@ -3,7 +3,21 @@ if [ "$(whoami)" != 'root' ]; then
     echo "Sorry, this script requires root. Please relaunch like that -> sudo ./start.sh"
     exit 1
 fi
-# Остальная часть скрипта
+
+show_spinner() {
+    local pid=$1
+    local message="$2"
+    local i=0
+    
+    echo -n "$message"
+    
+    printf '\r%s [%c]' "$message" '|/-\'[i++%4]
+
+    spin_str='|/-\'
+    printf '\r%s [%c]' "$message" "${spin_str:i++%4:1}"
+}
+
+
 echo "The script is launched from root. Launch!"
 echo "#############################################"
 echo "#Tool to make your work on steamdeck easier!#"
@@ -33,24 +47,33 @@ if [ "$answer" == 4 ]; then
     sudo tailscale login
 fi
 if [ "$answer" == 5 ]; then
-    read -p "Please write correct path to existing directory(or if you want to install not in the current directory please type ENTER):" path
+    read -p "Please write correct path to existing directory(or if you want to install in the current directory please type ENTER):" path
     if [ -z "$path" ]; then
-        git clone https://github.com/Sergeydigl3/zapret-discord-youtube-linux.git 
+        git clone https://github.com/Sergeydigl3/zapret-discord-youtube-linux.git && show_spinner $! "Downloading repo!"
+        current_dir=$(pwd)
+        mv zapret-discord-youtube-linux/ "$current_dir/zapret"
+        echo "Work complete!"
     else
-        git clone https://github.com/Sergeydigl3/zapret-discord-youtube-linux.git && mv zapret-discord-youtube-linux "$path"
+        git clone https://github.com/Sergeydigl3/zapret-discord-youtube-linux.git && show_spinner $! "Downloading repo!"
+        HDZ="$path/zapret"
+        mv zapret-discord-youtube-linux "$HDZ" && show_spinner $! "Moving!"
+        echo "Work complete"
     fi
 fi
 if [ "$answer" == 6 ]; then
     sudo systemctl start wg-quick@wg0.service
 fi
 if [ "$answer" == 7 ]; then
-    read -p "Please write correct path to existing directory(or if you want to install not in the current directory please type ENTER):" path
+    read -p "Please write correct path to existing directory(or if you want to install in the current directory please type ENTER):" path
     if [ -z "$path" ]; then
-        git clone https://aur.archlinux.org/curseforge.git
+        git clone https://aur.archlinux.org/curseforge.git && show_spinner $! "Downloading pkg!"
         cd curseforge
-        sudo -u deck makepkg -sri
+        sudo -u deck makepkg -sri $! "Making pkg"
     else
-        git clone https://aur.archlinux.org/curseforge.git && mv curseforge "$path"
+        git clone https://aur.archlinux.org/curseforge.git && show_spinner $! "Downloading repo!"
+        mv curseforge "$path" && show_spinner $! "Moving repo!"
+        makepkg -sri -C -p "$path/curseforge"
+        
     fi
 fi
 if [ "$answer" == 8 ]; then
