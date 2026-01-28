@@ -79,6 +79,3 @@ fi
 if [ "$answer" == 8 ]; then
     exit 1
 fi
-git clone https://aur.archlinux.org/curseforge.git
-        cd curseforge
-        sudo -u deck makepkg -sri
