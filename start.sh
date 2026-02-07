@@ -4,19 +4,43 @@ if [ "$(whoami)" != 'root' ]; then
     exit 1
 fi
 
+# Исправленная функция спиннера
 show_spinner() {
     local pid=$1
     local message="$2"
-    local i=0
+    local delay=0.1
+    local spinstr='|/-\'
+    tput sc
     
-    echo -n "$message"
-    
-    printf '\r%s [%c]' "$message" '|/-\'[i++%4]
-
-    spin_str='|/-\'
-    printf '\r%s [%c]' "$message" "${spin_str:i++%4:1}"
+    while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
+        local temp=${spinstr#?}
+        printf "\r%s [%c]" "$message" "$spinstr"
+        local spinstr=$temp${spinstr%"$temp"}
+        sleep $delay
+        printf "\b\b\b"
+    done
+    tput rc
+    tput ed
 }
 
+# backup (why?)
+#show_spinner_simple() {
+#    local pid=$1
+#    local message="$2"
+#    local spin='|/-\'
+    
+    echo -n "$message "
+    
+    while kill -0 $pid 2>/dev/null; do
+        for i in $(seq 0 3); do
+            echo -ne "\r$message [${spin:$i:1}]"
+            sleep 0.1
+        done
+    done
+    
+    echo -ne "\r$message [✓]"
+    echo
+}
 
 echo "The script is launched from root. Launch!"
 echo "#############################################"
@@ -32,50 +56,103 @@ echo "5) Download latest version zapret(linux)     6) start WG (if it already ex
 echo "7) Download and make latest version curseforge"
 echo "8) exit"
 read answer
+
 if [ "$answer" == 1 ]; then
-    sudo steamos-readonly disable
+    sudo steamos-readonly disable &
+    show_spinner_simple $! "Disabling readonly..."
 fi
+
 if [ "$answer" == 2 ]; then
-    sudo pacman -Suy
+    sudo pacman -Suy &
+    show_spinner_simple $! "Updating packages..."
 fi
+
 if [ "$answer" == 3 ]; then
-    sudo sed -i '42s/.*/SigLevel = Never/' /etc/pacman.conf
+    sudo sed -i '42s/.*/SigLevel = Never/' /etc/pacman.conf &
+    show_spinner_simple $! "Changing SigLevel..."
 fi
+
 if [ "$answer" == 4 ]; then
-    sudo pacman -Sy tailscale
-    sudo systemctl enable --now tailscaled.service
+    echo "Installing tailscale..."
+    sudo pacman -Sy tailscale &
+    show_spinner_simple $! "Installing tailscale..."
+    wait
+    
+    sudo systemctl enable --now tailscaled.service &
+    show_spinner_simple $! "Starting tailscale service..."
+    wait
+    
     sudo tailscale login
 fi
+
 if [ "$answer" == 5 ]; then
     read -p "Please write correct path to existing directory(or if you want to install in the current directory please type ENTER):" path
+    
     if [ -z "$path" ]; then
-        git clone https://github.com/Sergeydigl3/zapret-discord-youtube-linux.git && show_spinner $! "Downloading repo!"
+        echo "Downloading zapret..."
+        git clone https://github.com/Sergeydigl3/zapret-discord-youtube-linux.git &
+        show_spinner_simple $! "Downloading repo"
+        wait
+        
         current_dir=$(pwd)
-        mv zapret-discord-youtube-linux/ "$current_dir/zapret"
+        mv zapret-discord-youtube-linux/ "$current_dir/zapret" &
+        show_spinner_simple $! "Moving files"
+        wait
+        
         echo "Work complete!"
     else
-        git clone https://github.com/Sergeydigl3/zapret-discord-youtube-linux.git && show_spinner $! "Downloading repo!"
+        echo "Downloading zapret..."
+        git clone https://github.com/Sergeydigl3/zapret-discord-youtube-linux.git &
+        show_spinner_simple $! "Downloading repo"
+        wait
+        
         HDZ="$path/zapret"
-        mv zapret-discord-youtube-linux "$HDZ" && show_spinner $! "Moving!"
-        echo "Work complete"
+        mv zapret-discord-youtube-linux "$HDZ" &
+        show_spinner_simple $! "Moving to $path"
+        wait
+        
+        echo "Work complete!"
     fi
 fi
+
 if [ "$answer" == 6 ]; then
-    sudo systemctl start wg-quick@wg0.service
+    sudo systemctl start wg-quick@wg0.service &
+    show_spinner_simple $! "Starting WireGuard..."
 fi
+
 if [ "$answer" == 7 ]; then
     read -p "Please write correct path to existing directory(or if you want to install in the current directory please type ENTER):" path
+    
     if [ -z "$path" ]; then
-        git clone https://aur.archlinux.org/curseforge.git && show_spinner $! "Downloading pkg!"
-        cd curseforge
-        sudo -u deck makepkg -sri $! "Making pkg"
-    else
-        git clone https://aur.archlinux.org/curseforge.git && show_spinner $! "Downloading repo!"
-        mv curseforge "$path" && show_spinner $! "Moving repo!"
-        makepkg -sri -C -p "$path/curseforge"
+        echo "Downloading curseforge..."
+        git clone https://aur.archlinux.org/curseforge.git &
+        show_spinner_simple $! "Downloading curseforge"
+        wait
         
+        cd curseforge
+        echo "Building package..."
+        sudo -u deck makepkg -sri &
+        # Для makepkg нужен отдельный обработчик, так как это долгая операция
+        echo "Building package (this may take a while)..."
+        wait
+    else
+        echo "Downloading curseforge..."
+        git clone https://aur.archlinux.org/curseforge.git &
+        show_spinner_simple $! "Downloading repo"
+        wait
+        
+        mv curseforge "$path" &
+        show_spinner_simple $! "Moving repo to $path"
+        wait
+        
+        echo "Building package (this may take a while)..."
+        cd "$path/curseforge"
+        sudo -u deck makepkg -sri -C &
+        # Просто показываем процесс, так как makepkg сам показывает прогресс
+        wait
     fi
 fi
+
 if [ "$answer" == 8 ]; then
     exit 1
 fi
