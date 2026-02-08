@@ -52,7 +52,7 @@ echo "Choose your option:"
 echo "1) Readonly disable                               2) Update all pkg"
 echo "3) Fuck you pacman!(Switch SigLevel)              4) Install tailscale and try to login in"
 echo "5) Download latest version zapret(linux)          6) Start WG (if it already exist)"
-echo "7) Download and make latest version curseforge    8) Install Decky Loader & start it"
+echo "7) Download and make latest version curseforge    8) Install/Delete Decky Loader & start/stop it"
 echo "9) Change root password                           10) Exit"
 read answer
 # questions
@@ -142,7 +142,6 @@ if [ "$answer" == 7 ]; then
         mv curseforge "$path" &
         show_spinner_simple $! "Moving repo to $path"
         wait
-        
         echo "Building package (this may take a while)..."
         cd "$path/curseforge"
         sudo -u deck makepkg -sri -C &
@@ -150,7 +149,18 @@ if [ "$answer" == 7 ]; then
     fi
 fi
 if [ "$answer" == 8 ]; then
-    curl -L https://github.com/SteamDeckHomebrew/decky-installer/releases/latest/download/install_release.sh | sh
+    read -p "Y wanna install or delete DeckyLoader? [1/2]" choice
+    if [ "$choice" == 1 ]; then
+        curl -L https://github.com/SteamDeckHomebrew/decky-installer/releases/latest/download/install_release.sh | sh &
+        show_spinner $! "Installing Decky Loader"
+    else
+        if [ -d "/home/deck/homebrew" ]; then
+            curl -L https://github.com/SteamDeckHomebrew/decky-installer/releases/latest/download/uninstall.sh | sh &
+            show_spinner $! "Uninstalling Decky Loader :("
+        else
+            echo "You don't have Decky yet :)"
+        fi
+    fi
 fi
 if [ "$answer" == 9]; then
     passwd
