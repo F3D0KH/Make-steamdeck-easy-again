@@ -10,4 +10,6 @@ zapret-discord-youtube-linux by Sergeydigl3
 
 curseforge.git by saghm (i borrowed it from AUR)
 
+Decky Loader by his team (99 people?!?!) (https://github.com/SteamDeckHomebrew/decky-loader)
+
 Copyright hehe funny word
