@@ -3,8 +3,7 @@ if [ "$(whoami)" != 'root' ]; then
     echo "Sorry, this script requires root. Please relaunch like that -> sudo ./start.sh"
     exit 1
 fi
-
-# Исправленная функция спиннера
+#spinner
 show_spinner() {
     local pid=$1
     local message="$2"
@@ -39,7 +38,7 @@ show_spinner() {
     echo -ne "\r$message [✓]"
     echo
 }
-
+# Hello and options
 echo "The script is launched from root. Launch!"
 wait
 echo "#############################################"
@@ -56,7 +55,7 @@ echo "5) Download latest version zapret(linux)          6) Start WG (if it alrea
 echo "7) Download and make latest version curseforge    8) Install Decky Loader & start it"
 echo "9) Change root password                           10) Exit"
 read answer
-
+# questions
 if [ "$answer" == 1 ]; then
     sudo steamos-readonly disable &
     show_spinner_simple $! "Disabling readonly..."
@@ -132,7 +131,6 @@ if [ "$answer" == 7 ]; then
         cd curseforge
         echo "Building package..."
         sudo -u deck makepkg -sri &
-        # Для makepkg нужен отдельный обработчик, так как это долгая операция
         echo "Building package (this may take a while)..."
         wait
     else
@@ -148,23 +146,12 @@ if [ "$answer" == 7 ]; then
         echo "Building package (this may take a while)..."
         cd "$path/curseforge"
         sudo -u deck makepkg -sri -C &
-        # Просто показываем процесс, так как makepkg сам показывает прогресс
         wait
     fi
 fi
-<<COMMENT
 if [ "$answer" == 8 ]; then
-    read -p "Have you already changed the root password? [Y/N]" pass
-    if ["$pass" == "Y" || "$pass" == "y"]; then
-        curl -L https://github.com/SteamDeckHomebrew/decky-installer/releases/latest/download/install_release.sh | sh
-    else
-        passwd
-        echo "Password have successfully changed!"
-        echo "Proceeding installation" 
-        curl -L https://github.com/SteamDeckHomebrew/decky-installer/releases/latest/download/install_release.sh &
-        show_spinner_simple $! "Downloading" | sh
-        *\
-COMMENT
+    curl -L https://github.com/SteamDeckHomebrew/decky-installer/releases/latest/download/install_release.sh | sh
+fi
 if [ "$answer" == 9]; then
     passwd
 if [ "$answer" == 10 ]; then
