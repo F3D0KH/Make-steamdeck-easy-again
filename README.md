@@ -1,15 +1,59 @@
-# Make-steamdeck-easy-again
-This tool can make your experience on steamdeck easier
-<img width="690" height="390" alt="Снимок экрана 2025-12-22 174708" src="https://github.com/user-attachments/assets/ddbe1491-5808-4e8e-a8b5-38d3f6113f06" />
+# Так это, чо как ваще тут
 
-<img width="1920" height="1080" alt="Снимок экрана 2025-12-11 224139" src="https://github.com/user-attachments/assets/2a084ba6-d462-4132-8a54-bdb35b83947c" />
+Кароче, я типо написал "админ панель" для пользования SteamDeck, так как сам в этом нуждался, да и друг у меня не линуксоид, видите ли все должно быть кнопочками и циферками.
+При помощи этого скрипта можно:
 
-In my fan project i use:
+# Возможности:
+1) Поменять режим системы, так как по умолчанию он разрешен только на чтение.
 
-zapret-discord-youtube-linux by Sergeydigl3
+2) Обновить систему
 
-curseforge.git by saghm (i borrowed it from AUR)
+3) Если не получается что то обновить или скачать какой нибудь пакет, то делайте это действие, оно отключит проверку подлиности, что конечно же не безопасно. Ведь Габен, что то там намутил и оно может не работать.
 
-Decky Loader by his team (99 people?!?!) (https://github.com/SteamDeckHomebrew/decky-loader)
+4) Скачать Tailscale. Безусловно важный пункт для тех кто будет делать свои VPN, или просто получать доступ к своей локалке, когда находитесь далеко.
 
-Copyright hehe funny word
+5) Скачать последнюю версию zapret, но для линуха. Очень долго искал этот порт, но вот он, теперь вы сможете пользоваться YT или D даже на Дэке. [Тут](https://github.com/Sergeydigl3/zapret-discord-youtube-linux) <- Его проект и там же доп. инструкции, если что.
+
+6) Запустить WireGuard, если он уже есть.
+
+7) Скачать последнюю версию Сurseforge. Так как я любитель  майна, обычно выбираю его. [Тут](https://aur.archlinux.org/packages/curseforge) Брал отсюда, если что можете ознакомится сами.
+
+8) Установить или удалить Decky Loader. Это крутое дополнение для игрового режима, которые позволяет скачивать плагины, для упращения жизни. [Тут](https://decky.xyz/) <- Это их сайт, там остальная инфа, или вот их github -> [Тут](https://github.com/SteamDeckHomebrew/decky-loader).
+
+9) Сменить пароль супер пользователя.
+
+10) Выйти.
+
+# Как запустить
+
+0.1 Смените или сделайте пароль суперпользователя 
+
+   ```bash
+  passwd
+   ```
+
+1. **Клонирование репозитория и запуск:**
+
+   ```bash
+   git clone https://github.com/F3D0KH/Make-steamdeck-easy-again.git &&
+   cd Make-steamdeck-easy-again
+   ```
+   
+2. **Дайте ему права на исполнение(желательно, а то мало ли что):**
+
+   ```bash
+   chmod u+x start.sh
+   ```
+   
+4. **Стартуем!**
+
+   ```bash
+   ./start.sh
+   ```
+# И еще раз кото я там использовал 
+
+zapret-discord-youtube-linux от Sergeydigl3 https://github.com/Sergeydigl3/zapret-discord-youtube-linux
+
+curseforge.git от saghm https://aur.archlinux.org/packages/curseforge
+
+Decky Loader от их собсна команды https://github.com/SteamDeckHomebrew/decky-loader
