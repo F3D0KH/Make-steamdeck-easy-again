@@ -43,18 +43,20 @@ show_spinner() {
 }
 
 echo "The script is launched from root. Launch!"
+wait
 echo "#############################################"
 echo "#Tool to make your work on steamdeck easier!#"
 echo "#                                           #"
 echo "#             by F3D0KH                     #"
 echo "#############################################"
+wait
 
 echo "Choose your option:"
-echo "1) Readonly disable                          2) Update all pkg"
-echo "3) Fuck you pacman!(Switch SigLevel)         4) Install tailscale and try to login in"
-echo "5) Download latest version zapret(linux)     6) start WG (if it already exist)"
-echo "7) Download and make latest version curseforge"
-echo "8) exit"
+echo "1) Readonly disable                               2) Update all pkg"
+echo "3) Fuck you pacman!(Switch SigLevel)              4) Install tailscale and try to login in"
+echo "5) Download latest version zapret(linux)          6) Start WG (if it already exist)"
+echo "7) Download and make latest version curseforge    8) Install Decky Loader & start it"
+echo "9) Change root password                           10) Exit"
 read answer
 
 if [ "$answer" == 1 ]; then
@@ -152,7 +154,21 @@ if [ "$answer" == 7 ]; then
         wait
     fi
 fi
-
+<<COMMENT
 if [ "$answer" == 8 ]; then
+    read -p "Have you already changed the root password? [Y/N]" pass
+    if ["$pass" == "Y" || "$pass" == "y"]; then
+        curl -L https://github.com/SteamDeckHomebrew/decky-installer/releases/latest/download/install_release.sh | sh
+    else
+        passwd
+        echo "Password have successfully changed!"
+        echo "Proceeding installation" 
+        curl -L https://github.com/SteamDeckHomebrew/decky-installer/releases/latest/download/install_release.sh &
+        show_spinner_simple $! "Downloading" | sh
+        *\
+COMMENT
+if [ "$answer" == 9]; then
+    passwd
+if [ "$answer" == 10 ]; then
     exit 1
 fi
