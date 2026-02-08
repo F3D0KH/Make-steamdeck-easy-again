@@ -30,6 +30,11 @@ show_spinner() {
             sleep 0.1
         done
     done
+    # backup (why?)
+#show_spinner_simple() {
+#    local pid=$1
+#    local message="$2"
+#    local spin='|/-\'
     
     echo -ne "\r$message [✓]"
     echo
