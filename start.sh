@@ -22,13 +22,6 @@ show_spinner() {
     tput rc
     tput ed
 }
-
-# backup (why?)
-#show_spinner_simple() {
-#    local pid=$1
-#    local message="$2"
-#    local spin='|/-\'
-    
     echo -n "$message "
     
     while kill -0 $pid 2>/dev/null; do
