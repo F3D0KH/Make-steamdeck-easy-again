@@ -50,7 +50,7 @@
    ```bash
    ./start.sh
    ```
-# И еще раз кото я там использовал 
+# И еще раз кого я там использовал 
 
 zapret-discord-youtube-linux от Sergeydigl3 https://github.com/Sergeydigl3/zapret-discord-youtube-linux
 
